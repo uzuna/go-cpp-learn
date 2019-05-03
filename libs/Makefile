@@ -1,15 +1,17 @@
-ARFLAG += -r
+OBJS = main.o libarymod.a 
 
-SRCS=$(wildcard *.cpp)
-OBJS=$(SRCS:.cpp=.o)
+link : $(OBJS)
+	g++ -o out.exe $(OBJS)
 
-include $(subst .cpp,.d,$(SRCS))
+libarymod.a : arymod.o
+	ar r $@ $<
+	ranlib $@
 
-build: $(OBJS)
-	ar $(ARFLAG) $@ $?
-	g++  -std=c++11 -o arymod main.cpp
+.cpp.o : 
+	g++ -std=c++11 -c $< -g -O2 
 
-%.d: %.cpp
-	$(CC) -MM $(CPPFLAGS) $< > $@.$$$$; \
-	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
-	rm -f $@.$$$$
+all : link
+
+clean:
+	rm -rf *.o *.a out.exe
+

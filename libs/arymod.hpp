@@ -13,8 +13,8 @@ public:
 	~Arymod(){};
 
 	void SetA(float _a);
-	std::vector<float> Add(std::vector<float> &list);
-	std::vector<float> Multi(std::vector<float> &list);
+	std::vector<float> Add(std::vector<float> list);
+	std::vector<float> Multi(std::vector<float> list);
 };
 
 #endif
