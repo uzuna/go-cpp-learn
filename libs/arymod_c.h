@@ -9,7 +9,9 @@ extern "C" {
 Mod Mod_construct(float a_);
 void Mod_destruct(Mod id);
 
+void SetA(Mod id, float a_);
 void Add(Mod id, float *in_, int length, float *out_);
+void AddSleep(Mod id, float *in_, int length, float *out_, int usec);
 void Multi(Mod id, float *in_, int length, float *out_);
 
 

@@ -5,4 +5,4 @@ WORKDIR /app
 COPY . .
 
 
-RUN make howto-go-with-cpp
+RUN make link

@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "arymod.hpp"
 #include "arymod_c.h"
 
@@ -28,9 +29,22 @@ void Mod_destruct(Mod id) {
 	delete a;
 }
 
+void SetA(Mod id, float a_) {
+	Arymod *a = (Arymod*)id;
+	a->SetA(a_);
+}
+
 void Add(Mod id, float *in_, int length, float *out_) {
 	Arymod *a = (Arymod*)id;
 	std::vector<float> v = array2vector(in_, length);
+	std::vector<float> result = a->Add(v);
+	vector2array(result, out_);
+}
+
+void AddSleep(Mod id, float *in_, int length, float *out_, int usec) {
+	Arymod *a = (Arymod*)id;
+	std::vector<float> v = array2vector(in_, length);
+	usleep(usec);
 	std::vector<float> result = a->Add(v);
 	vector2array(result, out_);
 }

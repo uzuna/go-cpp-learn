@@ -1,5 +1,8 @@
 .PHONY: clean
 
+TARGET=go-cpp-learn
+
+
 #
 # libsのbuild + link
 #
@@ -17,12 +20,17 @@ clean:
 #
 test:
 	CGO_ENABLED=1 go test ./pkg/arymod -v -count=1
+#
+bench:
+	CGO_ENABLED=1 go test ./pkg/arymod -bench .
 
-build-docker:
-	$(eval containerid=${TARGET})
-	$(eval imageid=${TARGET}-extract)
+test-docker:
+	$(eval containerid=${TARGET}-cpp)
 
 	docker build -t ${containerid} .
+
+	docker run --rm ${containerid} make test
+	docker run --rm ${containerid} make bench
 
 
 run:
