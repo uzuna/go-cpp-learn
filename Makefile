@@ -1,20 +1,22 @@
 .PHONY: clean
 
-TARGET=howto-go-with-cpp
+#
+# libsのbuild + link
+#
+link:
+	$(MAKE) -C libs
 
-$(TARGET): libfoo.a
-	go build -o bin/${TARGET} .
-
-libfoo.a: foo.o cfoo.o
-	ar r $@ $^
-
-%.o: %.cpp
-	g++ -O2 -o $@ -c $^
-
+#
+# libs配下をclean
+#
 clean:
-	rm -f *.o *.so *.a $(TARGET)
+	$(MAKE) -C libs clean
 
-
+#
+# CGOを使うarymodをテスト
+#
+test:
+	CGO_ENABLED=1 go test ./pkg/arymod -v -count=1
 
 build-docker:
 	$(eval containerid=${TARGET})
