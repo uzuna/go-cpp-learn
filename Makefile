@@ -30,7 +30,8 @@ test-docker:
 	docker build -t ${containerid} .
 
 	docker run --rm ${containerid} make test
-	docker run --rm ${containerid} make bench
+	docker run --rm --cpus=1 -m 128m ${containerid} make bench
+	docker run --rm --cpus=2 -m 128m ${containerid} make bench
 
 
 run:
